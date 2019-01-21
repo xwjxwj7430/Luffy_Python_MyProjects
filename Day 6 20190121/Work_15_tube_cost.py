@@ -5,6 +5,7 @@
 
 distance = int(input("家到公司的地铁距离(单位:km):"))
 # 先计算单次出行成本，再综合考虑优惠情形；
+
 if 0 < distance <= 6:
     p = 3
 elif 6 < distance <= 12:
@@ -16,9 +17,19 @@ elif 22 < distance <= 32:
 else:
     p = 6 + ((distance - 32) // 20 + 1) * 1
     if (distance - 32) % 20 == 0:   # 此处是因为52,72等数应被包含在前一个价位中，所以特别处理
-        p = p-1
+        p = p - 1
 
-print(p)
+# 确定好了单价之后开始计算总价；
 
-# 这里开始考虑优惠情形，分3档，100元以下，100-150元，150元以上；
+count = 1
+cost = 0
+while count <= 40:
+    if cost < 100:
+        cost = cost + p
+    elif 100 <= cost < 150:
+        cost = cost + p * 0.8
+    else:
+        cost = cost + p * 0.5
+    count += 1
 
+print(cost)
