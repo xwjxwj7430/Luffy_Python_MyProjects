@@ -12,6 +12,7 @@ print('------------商品列表-----------')
 
 while True:
     add_to_cart = input('请问您想买几号商品：')
+    # if add_to_cart.isdigit() == True
     if add_to_cart == 'q':
         break
     cart.append(products[int(add_to_cart)])
