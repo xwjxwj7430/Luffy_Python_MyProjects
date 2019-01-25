@@ -14,9 +14,9 @@ while True:
     add_to_cart = input('请问您想买几号商品：')
     if add_to_cart.isdigit():
         cart.append(products[int(add_to_cart)])
+        print('您目前购物车内的商品为 ', cart)
     elif add_to_cart == 'q':
         break
-    print('您目前购物车内的商品为 ', cart)
 
 print('------------结账清单-----------')
 
