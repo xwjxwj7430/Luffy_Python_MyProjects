@@ -54,3 +54,4 @@ for i, element in enumerate(li, start=100):
 # 请使用for循环输出列表的所有元素:
 for i in range(len(li)):
     print(li[i])
+
