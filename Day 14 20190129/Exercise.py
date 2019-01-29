@@ -59,7 +59,7 @@
 # print(li)
 
 # 4. 写代码，有如下元组，按照要求实现每一个功能
-tu = ('alex', 'eric', 'rain')
+# tu = ('alex', 'eric', 'rain')
 
 # print(len(tu))
 # print(tu[1])
