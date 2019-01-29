@@ -151,3 +151,44 @@ tu = ('alex', 'eric', 'rain')
 #
 # print(dic)
 
+# 10. 输出商品列表，用户输入序号，显示用户选中的商品
+# 商品 li = ["手机"，"电脑"，"鼠标垫"，"游艇"]
+# 允许用户添加商品
+# 用户输入序号显示内容
+
+li = ["手机", "电脑", "鼠标垫", "游艇"]
+s = '商品列表'
+buy = '购物车商品列表'
+shopping_cart = []
+exit_flag = False
+
+while not exit_flag:
+    print(s.center(50, '-'))
+    for index, i in enumerate(li, start=0):
+        print('%s. %s' % (index, i))
+    choice = input('请输入您要选择的商品： （按q键买单或者退出）')
+    if choice.isdigit():
+        choice = int(choice)
+        if choice < len(li):
+            print('您选中的商品为：', li[choice])
+            buy_choice = input("，请问是否要添加该商品至您的购物车？（输入'y'添加，否则重新回到商品列表）")
+            if buy_choice == 'y':
+                shopping_cart.append(li[choice])
+                print('商品', li[choice], '已经添加到您的购物车，请继续购物，如需买单请按q键')
+            else:
+                pass
+        else:
+            print('对不起，您输入的商品编号不存在，请重新输入')
+    elif choice == 'q':
+        if len(shopping_cart) == 0:
+            print('感谢您的光临！')
+            exit_flag = True
+        else:
+            print(buy.center(50, '-'))
+            for index, i in enumerate(shopping_cart, start=1):
+                print('%s. %s' % (index, i))
+            exit_flag = True
+    else:
+        print('对不起，请您输入数字编号，谢谢')
+
+
