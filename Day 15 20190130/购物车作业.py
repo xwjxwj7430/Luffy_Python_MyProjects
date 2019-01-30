@@ -73,7 +73,7 @@ while not exit_flag:
                     print('\033[7m 很遗憾，那下次再添加吧，先去购物吧！\033[0m')
                     break  # 跳出登陆循环
     while not exit_flag:
-        salary = input('请输入您的工资（单位：元）：')  # 用户输入此次工资收入，加上上次余额，总和即为此次可消费最大金额
+        salary = input('请输入您的工资（单位：元）输入q退出：')  # 用户输入此次工资收入，加上上次余额，总和即为此次可消费最大金额
 
         if salary.isdigit():
             salary = int(salary)
@@ -143,6 +143,8 @@ while not exit_flag:
             print(s_buy_list.center(50, '-'))
             print('\033[7m 您的余额为%s元 \033[0m' % balance)  # 最后打印此次购买结束后的余额情况
 
+        elif salary == 'q':
+            exit_flag = True
         else:
             print('对不起，工资输入有误，请重新输入，谢谢！')  # 工资为非数字，提示报错
 
