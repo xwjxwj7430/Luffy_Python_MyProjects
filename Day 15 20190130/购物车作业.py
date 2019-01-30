@@ -36,9 +36,9 @@ balance = 0
 
 while not exit_flag:
     print('\033[7m 欢迎来到天上人间网上购物中心！\033[0m')  # 欢迎界面
-    username = input('请输入您的用户名（输入q退出）：')  # 用户输入用户名，准备进行比对
 
     while not exit_flag:
+        username = input('请输入您的用户名（输入q退出）：')  # 用户输入用户名，准备进行比对
         if username == 'q':
             exit_flag = True
         else:
@@ -55,7 +55,9 @@ while not exit_flag:
                         for index, i in enumerate(user_history[username]):
                             print('%s. %s %s元' % (index, goods[i]['name'], goods[i]['price']))
                         print(s_shopping_history.center(50, '-'))
-                    break  # 密码成功后无论何种选择，跳出登陆循环开始输入工资并开始购物
+                        break  # 跳出登陆循环
+                    else:
+                        break
                 else:
                     print('\033[7m 用户名或密码错误，请重新输入！\033[0m')  # 密码错误，重新输入
             else:
@@ -70,81 +72,79 @@ while not exit_flag:
                 else:
                     print('\033[7m 很遗憾，那下次再添加吧，先去购物吧！\033[0m')
                     break  # 跳出登陆循环
+    while not exit_flag:
+        salary = input('请输入您的工资（单位：元）：')  # 用户输入此次工资收入，加上上次余额，总和即为此次可消费最大金额
 
-    salary = input('请输入您的工资（单位：元）：')  # 用户输入此次工资收入，加上上次余额，总和即为此次可消费最大金额
+        if salary.isdigit():
+            salary = int(salary)
+            balance += salary  # 计算此次可消费的最大金额
+            shopping_cart = []  # 初始化购物车
+            buy_success = []  # 初始化购买成功的商品清单
+            total_price = 0  # 初始化此次购物车中商品总价
+            print('\033[7m您当前的可用余额为%s\033[0m' % balance)  # 高亮提醒客户当前总可消费金额
 
-    if salary.isdigit():
-        salary = int(salary)
-        balance += salary  # 计算此次可消费的最大金额
-        shopping_cart = []  # 初始化购物车
-        buy_success = []  # 初始化购买成功的商品清单
-        total_price = 0  # 初始化此次购物车中商品总价
-        print('\033[7m您当前的可用余额为%s\033[0m' % balance)  # 高亮提醒客户当前总可消费金额
+            while not exit_flag:
+                s_list = '商品列表'  # 打印在售商品清单
+                print(s_list.center(50, '-'))
+                for index, i in enumerate(goods):
+                    print('%s. %s %s元' % (index, i['name'], i['price']))
+                print(s_list.center(50, '-'))
 
-        while not exit_flag:
-            s_list = '商品列表'  # 打印在售商品清单
-            print(s_list.center(50, '-'))
-            for index, i in enumerate(goods):
-                print('%s. %s %s元' % (index, i['name'], i['price']))
-            print(s_list.center(50, '-'))
-
-            item_buy = input('请输入您想要购买的商品编号（输入c查看购物车并结账，输入q退出）： ')  # 询问客户决定
-            if item_buy == 'q':
-                exit_flag = True
-            elif item_buy.isdigit():  # 如果客户成功输入一个数字
-                item_buy = int(item_buy)
-                if item_buy < len(goods):  # 并且该商品在在售列表之中
-                    shopping_cart.append(item_buy)  # 添加至购物车
-                    print('\033[7m 商品 %s 已经添加到购物车啦！\033[0m' % goods[item_buy]['name'])  # 添加购物车成功提示
-                else:
-                    print('对不起，商品不存在，请重新输入，谢谢！')  # 提示客户重新输入在售范围内的有效商品编号
-            elif item_buy == 'c':  # 如果客户选择查看购物车清单
-                if len(shopping_cart) == 0:  # 如果当前购物车无商品，提示用户先添加商品再查看
-                    print('\033[7m 对不起，当前购物车为空，请先添加商品，谢谢！ \033[0m')
-                else:
-                    s_shopping_cart_list = '购物车商品清单'  # 如果当前购物车不为空，打印购物车清单
-                    print(s_shopping_cart_list.center(50, '-'))
-                    for index, i in enumerate(shopping_cart, start=1):
-                        print('%s. %s %s元' % (index, goods[i]['name'], goods[i]['price']))
-                        total_price += goods[i]['price']
-                    print(s_shopping_cart_list.center(50, '-'))
-                    print('\033[7m 共计%s元 \033[0m' % total_price)  # 打印购物车清单总价
-                    print('\033[7m您当前的可用余额为%s\033[0m' % balance)  # 再次提示客户可用余额，方便比对
-
-                    decision = input('请问您是否现在结账？结账请输y，退出请输q，否则继续购物： ')  # 询问客户是否结账
-                    if decision == 'y':  # 如结账，则计算当前余额是否足够，不够则提示，够则扣款，并提示扣款成功信息
-                        if balance >= total_price:
-                            balance -= total_price
-                            buy_success.extend(shopping_cart)
-                            print('\033[7m 购物车所有商品扣款成功，您的商品即将进入物流，请耐心等待，谢谢您的支持！ \033[0m')
-                            exit_flag = True  # 成功扣款，退出程序，此次购买完毕
-                        else:
-                            print('\033[7m 对不起，您的余额不足，请充值后再试！（系统即将为您跳回至购物界面） \033[0m')  # 余额不足，提示充值，并返回购物界面
-                    elif decision == 'q':
-                        exit_flag = True
+                item_buy = input('请输入您想要购买的商品编号（输入c查看购物车并结账，输入q退出）： ')  # 询问客户决定
+                if item_buy == 'q':
+                    exit_flag = True
+                elif item_buy.isdigit():  # 如果客户成功输入一个数字
+                    item_buy = int(item_buy)
+                    if item_buy < len(goods):  # 并且该商品在在售列表之中
+                        shopping_cart.append(item_buy)  # 添加至购物车
+                        print('\033[7m 商品 %s 已经添加到购物车啦！\033[0m' % goods[item_buy]['name'])  # 添加购物车成功提示
                     else:
-                        pass
+                        print('对不起，商品不存在，请重新输入，谢谢！')  # 提示客户重新输入在售范围内的有效商品编号
+                elif item_buy == 'c':  # 如果客户选择查看购物车清单
+                    if len(shopping_cart) == 0:  # 如果当前购物车无商品，提示用户先添加商品再查看
+                        print('\033[7m 对不起，当前购物车为空，请先添加商品，谢谢！ \033[0m')
+                    else:
+                        s_shopping_cart_list = '购物车商品清单'  # 如果当前购物车不为空，打印购物车清单
+                        print(s_shopping_cart_list.center(50, '-'))
+                        for index, i in enumerate(shopping_cart, start=1):
+                            print('%s. %s %s元' % (index, goods[i]['name'], goods[i]['price']))
+                            total_price += goods[i]['price']
+                        print(s_shopping_cart_list.center(50, '-'))
+                        print('\033[7m 共计%s元 \033[0m' % total_price)  # 打印购物车清单总价
+                        print('\033[7m您当前的可用余额为%s\033[0m' % balance)  # 再次提示客户可用余额，方便比对
+
+                        decision = input('请问您是否现在结账？结账请输y，退出请输q，否则继续购物： ')  # 询问客户是否结账
+                        if decision == 'y':  # 如结账，则计算当前余额是否足够，不够则提示，够则扣款，并提示扣款成功信息
+                            if balance >= total_price:
+                                balance -= total_price
+                                buy_success.extend(shopping_cart)
+                                print('\033[7m 购物车所有商品扣款成功，您的商品即将进入物流，请耐心等待，谢谢您的支持！ \033[0m')
+                                exit_flag = True  # 成功扣款，退出程序，此次购买完毕
+                            else:
+                                print('\033[7m 对不起，您的余额不足，请充值后再试！（系统即将为您跳回至购物界面） \033[0m')  # 余额不足，提示充值，并返回购物界面
+                        elif decision == 'q':
+                            exit_flag = True
+                        else:
+                            pass
+                else:
+                    print('对不起，商品编号有误，请重新输入，谢谢！')  # 输入的商品编号为非数字，也不是退出q，提示出错，重新输入
+
+            s_buy_list = '已购买的商品清单'  # 最后打印已购买商品清单，如空，则打印‘无’，否则正常打印
+            print(s_buy_list.center(50, '-'))
+            if len(buy_success) == 0:
+                s_n = '无'
+                print(s_n.center(58, ' '))
             else:
-                print('对不起，商品编号有误，请重新输入，谢谢！')  # 输入的商品编号为非数字，也不是退出q，提示出错，重新输入
+                for index, i in enumerate(buy_success, start=1):  # 正常打印
+                    print('%s. %s %s元' % (index, goods[i]['name'], goods[i]['price']))
+                if username in user_info:  # 如果客户是已存在用户，将购买记录的列表和余额数字存储至相应数据文件
+                    user_history[username].extend(buy_success)
+                    user_balance[username] = balance
+            print(s_buy_list.center(50, '-'))
+            print('\033[7m 您的余额为%s元 \033[0m' % balance)  # 最后打印此次购买结束后的余额情况
 
-        s_buy_list = '已购买的商品清单'  # 最后打印已购买商品清单，如空，则打印‘无’，否则正常打印
-        print(s_buy_list.center(50, '-'))
-        if len(buy_success) == 0:
-            s_n = '无'
-            print(s_n.center(58, ' '))
         else:
-            for index, i in enumerate(buy_success, start=1):  # 正常打印
-                print('%s. %s %s元' % (index, goods[i]['name'], goods[i]['price']))
-            if username in user_info:  # 如果客户是已存在用户，将购买记录的列表和余额数字存储至相应数据文件
-                user_history[username].extend(buy_success)
-                user_balance[username] = balance
-        print(s_buy_list.center(50, '-'))
-        print('\033[7m 您的余额为%s元 \033[0m' % balance)  # 最后打印此次购买结束后的余额情况
-
-    else:
-        print('对不起，工资输入有误，请重新输入，谢谢！')  # 工资为非数字，提示报错
-
+            print('对不起，工资输入有误，请重新输入，谢谢！')  # 工资为非数字，提示报错
 
 print('系统已退出')
-print('欢迎您再度光临！')
-
+print('期待您再度光临！')
