@@ -1,0 +1,1 @@
+{'alex': {'password': 'shuai', 'history': [0, 1, 0, 3], 'balance': 5000}, 'eric': {'password': 'ge', 'history': [0, 1], 'balance': 50}, 'john': {'password': 'jiu', 'history': [0], 'balance': 0}, 'nick': {'password': 'shi', 'history': [], 'balance': 0}}
