@@ -118,7 +118,6 @@ while not exit_flag:
 
                         else:
                             print('对不起，您输入的操作不存在，请重新输入')
-            else:
                 print('对不起，您输入的操作不存在，请重新输入')
 
 print('系统已退出')
