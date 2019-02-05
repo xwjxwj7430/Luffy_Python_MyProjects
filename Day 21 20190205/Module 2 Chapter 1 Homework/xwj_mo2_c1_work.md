@@ -109,5 +109,11 @@ demo 2
 
 
 
+
+
 5. 退出请输"q"
 ![退](https://github.com/xwjxwj7430/Luffy_Python_MyProjects/blob/master/Day%2021%2020190205/Module%202%20Chapter%201%20Homework/6.%E9%80%80%E5%87%BA.png)
+
+
+附：流程图如下：
+![流程图](https://github.com/xwjxwj7430/Luffy_Python_MyProjects/blob/master/Day%2021%2020190205/Module%202%20Chapter%201%20Homework/%E5%91%98%E5%B7%A5%E4%BF%A1%E6%81%AF%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
